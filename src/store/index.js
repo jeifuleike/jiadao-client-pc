@@ -6,6 +6,8 @@ import createPersistedstate from 'vuex-persistedstate'
 import user from './modules/user'
 // 购物车状态
 import cart from './modules/cart'
+// 首页数据
+import header from './modules/header'
 
 // vue2.0 创建仓库 new Vuex.Store({})
 // vue3.0 创建仓库 createStore({})
@@ -21,7 +23,8 @@ export default createStore({
   modules: {
     // 导入子模块
     user,
-    cart
+    cart,
+    header
   },
   // 插件处理
   // plugins是vuex官方给的专门添加第三方插件的地方
@@ -32,7 +35,7 @@ export default createStore({
       // key是一个自定义的存储键（storage key），用于标识存储在本地存储中的 Vuex 状态。
       key: 'erabbit-client-pc-store',
       // paths: 里面是一个数组，其中包含你希望持久化的 Vuex 模块路径。
-      paths: ['user', 'cart']
+      paths: ['user', 'cart', 'header']
     }),
     createLogger()
   ]
