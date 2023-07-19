@@ -9,8 +9,5 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import '../../assets/style/mixins.less';
-.container{
-  .hoverShadow()
-}
+
 </style>
