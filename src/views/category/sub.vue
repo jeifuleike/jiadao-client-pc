@@ -1,11 +1,11 @@
 <template>
     <div class="container">
-      TopCategory
+      SubCategory
     </div>
 </template>
 <script>
 export default {
-  name: 'TopCategory'
+  name: 'SubCategory'
 }
 </script>
 
