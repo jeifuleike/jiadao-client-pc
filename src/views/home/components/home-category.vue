@@ -4,10 +4,14 @@
       <!-- 一级 -->
       <li v-for="item in list" :key="item.id" @mouseenter="mouList(item.id)"
         :style="{ background: item.id === listChildrenId ? '#27BA9B' : 'transparent' }">
-        <RouterLink to="/category/${item.id}">{{ item.name }}</RouterLink>
+        <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         <!-- 二级 -->
-        <template v-if="item.children">
-          <RouterLink v-for="sub in item.children.slice(0, 2)" :key="sub.id" to="/category/sub/${item.id}">
+        <!-- 加载占位符 -->
+        <template v-if="!item.children">
+          <XtxSkeleton width="50" height="25" v-for="i in 2" :key="i" style="margin: 5px;"/>
+        </template>
+        <template v-else>
+          <RouterLink v-for="sub in item.children.slice(0, 2)" :key="sub.id" :to="`/category/sub/${sub.id}`">
             {{ sub.name }}
           </RouterLink>
         </template>
@@ -17,8 +21,8 @@
         <h4>{{listChildrenId === 'brand'?'品牌推荐':'分类推荐'}} <small>根据您的购买或浏览记录推荐</small></h4>
         <ul v-if="listChildrenId && !(listChildrenId === 'brand')">
           <li v-for="item in listChildren" :key="item.id">
-            <RouterLink to="/">
-              <img :src="item.picture">
+            <RouterLink :to="`/product/${item.id}`">
+              <img v-lazy="item.picture">
               <div class="info">
                 <p class="name ellipsis-2">{{ item.name }}</p>
                 <p class="desc ellipsis">{{ item.desc }}</p>
@@ -31,7 +35,7 @@
         <ul v-if="listChildrenId === 'brand'">
           <li class="brand" v-for="item in listChildren" :key="item.id">
             <RouterLink to="/">
-              <img :src="item.picture">
+              <img v-lazy="item.picture">
               <div class="info">
                 <p class="place"><i class="iconfont icon-dingwei"></i>{{ item.place }}</p>
                 <p class="name ellipsis">{{ item.name }}</p>
@@ -53,7 +57,6 @@ export default {
   name: 'HomeCategory',
   setup () {
     const store = useStore()
-
     // 侧边栏数据铺设
     const brand = reactive({
       id: 'brand',
@@ -92,7 +95,6 @@ export default {
     // 获取品牌数据
     hotpp().then(data => {
       brand.goods = data.result
-      console.log(data.result)
     })
 
     return { list, listChildrenId, mouList, listChildren }

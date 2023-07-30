@@ -3,14 +3,14 @@
         <li class="home">
             <RouterLink to="/">首页</RouterLink>
         </li>
-        <li v-for="(item, index) in $store.state.header.list" :key="index" @mouseenter="show(item)" @mouseleave="hide(item)">
+        <li v-for="(item, index) in $store.state.header.list" :key="index" @mousemove="show(item)" @mouseleave="hide(item)">
             <RouterLink @click="hide(item)" :to="`/category/${item.id}`" href="#">{{ item.name }}</RouterLink>
             <!-- hover 显示 start -->
             <div class="layer" :class="{open:item.open}">
                 <ul>
                     <li v-for="(items, index) in item.children" :key="index">
-                        <RouterLink @click="hide(item)" :to="`/category/sub/${item.id}`" href="#">
-                            <img :src="items.picture" alt="">
+                        <RouterLink @click="hide(item)" :to="`/category/sub/${items.id}`" href="#">
+                            <img v-lazy="items.picture" alt="">
                             <p>{{ items.name }}</p>
                         </RouterLink>
                     </li>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+
 import { useStore } from 'vuex'
 export default {
   name: 'AppHeaderNav',
@@ -113,6 +114,12 @@ export default {
 
         // hover之后显示出来
         &:hover {
+            >a {
+                color: @xtxColor;
+                border-bottom: 1px solid @xtxColor;
+            }
+        }
+        .active {
             >a {
                 color: @xtxColor;
                 border-bottom: 1px solid @xtxColor;

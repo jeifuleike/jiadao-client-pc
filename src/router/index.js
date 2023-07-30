@@ -8,7 +8,8 @@ const routes = [
     children: [
       { path: '/', component: () => import('@/views/home') },
       { path: '/category/:id', component: () => import('@/views/category') },
-      { path: '/category/sub/:id', component: () => import('@/views/category/sub.vue') }
+      { path: '/category/sub/:id', component: () => import('@/views/category/sub.vue') },
+      { path: '/product/:id', component: import('@/views/goods') }
     ]
   }
 ]
@@ -18,7 +19,11 @@ const routes = [
 const router = createRouter({
   // 使用hash的路由模式
   history: createWebHashHistory(),
-  routes
+  routes,
+  // 每次切换路由的时候滚动到顶部
+  scrollBehavior () {
+    return { left: 0, top: 0 }
+  }
 })
 
 export default router

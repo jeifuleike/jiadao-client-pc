@@ -29,7 +29,6 @@ export default {
       result.forEach(element => {
         element.open = false
       })
-      console.log(result)
       commit('setList', result)
     }
   }

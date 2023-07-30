@@ -6,5 +6,7 @@ import RabbitUi from 'rabbit-ui-core'
 import 'rabbit-ui-core/dist/rabbit-ui.css'
 import 'normalize.css'
 import '@/assets/style/common.less'
+// 自定义组件库
+import UI from '@/components/library'
 
-createApp(App).use(store).use(router).use(RabbitUi).mount('#app')
+createApp(App).use(store).use(router).use(RabbitUi).use(UI).mount('#app')
