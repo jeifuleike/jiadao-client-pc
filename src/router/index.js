@@ -11,7 +11,8 @@ const routes = [
       { path: '/category/sub/:id', component: () => import('@/views/category/sub.vue') },
       { path: '/product/:id', component: import('@/views/goods') }
     ]
-  }
+  },
+  { path: '/login', component: import('@/views/login') }
 ]
 
 // vue2.0 new VueRouter({})创建路由实例

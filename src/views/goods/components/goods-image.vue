@@ -41,6 +41,7 @@ export default {
     const { elementX, elementY, isOutside } = useMouseInElement(target)
     watch([elementX, elementY, isOutside], () => {
       show.value = !isOutside.value
+      // 判断鼠标是否在图片边缘，应保证鼠标在边缘时遮罩层仍不越界
       if (elementX.value < 100) {
         layerPosition.left = '0px'
         largePosition.backgroundPositionX = '0px'

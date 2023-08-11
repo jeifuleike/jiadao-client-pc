@@ -2,16 +2,23 @@
   <div class='xtx-carousel' @mouseenter="cleanTimer()" @mouseleave="autoPlayFn()">
     <ul class="carousel-body">
       <li class="carousel-item" v-for="(item, index) in photoList" :key="item.id" :class="{ fade: index === listIndex }">
-        <RouterLink :to="item.hrefUrl">
+        <RouterLink v-if="item.hrefUrl" :to="item.hrefUrl">
           <img v-lazy="item.imgUrl" alt="">
         </RouterLink>
+        <div v-else class="slider">
+          <RouterLink v-for="goods in item" :key="goods.id" :to="`/product/${goods.id}`">
+            <img :src="goods.picture" alt="">
+            <p class="name ellipsis">{{ goods.name }}</p>
+            <p class="price">&yen;{{ goods.price }}</p>
+          </RouterLink>
+        </div>
       </li>
     </ul>
     <a href="javascript:;" class="carousel-btn prev" @click="prev()"><i class="iconfont icon-angle-left"></i></a>
     <a href="javascript:;" class="carousel-btn next" @click="next()"><i class="iconfont icon-angle-right"></i></a>
     <div class="carousel-indicator">
-      <span v-for="i in photoList.length" :key="i" @click="listIndex = i-1"
-        :class="{ active: i-1 === listIndex }"></span>
+      <span v-for="i in photoList.length" :key="i" @click="listIndex = i - 1"
+        :class="{ active: i - 1 === listIndex }"></span>
     </div>
   </div>
 </template>
@@ -102,6 +109,35 @@ export default {
       opacity: 0;
       transition: opacity 0.5s linear;
 
+      .slider {
+        display: flex;
+        justify-content: space-around;
+        padding: 0 40px;
+
+        >a {
+          width: 240px;
+          text-align: center;
+
+          img {
+            padding: 20px;
+            width: 230px !important;
+            height: 230px !important;
+          }
+
+          .name {
+            font-size: 16px;
+            color: #666;
+            padding: 0 40px;
+          }
+
+          .price {
+            font-size: 16px;
+            color: @priceColor;
+            margin-top: 15px;
+          }
+        }
+      }
+
       &.fade {
         opacity: 1;
         z-index: 1;
@@ -259,5 +295,4 @@ export default {
       opacity: 1;
     }
   }
-}
-</style>
+}</style>
