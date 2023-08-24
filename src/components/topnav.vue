@@ -3,13 +3,13 @@
   <nav class="app-topnav">
     <div class="container">
       <ul>
-        <template v-if="profile.nickname">
-            <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{ profile.nickname }}</a></li>
-            <li><a href="javascript:;">退出登录</a></li>
+        <template v-if="profile.account">
+            <li><RouterLink to="/member"><i class="iconfont icon-user"></i>{{ profile.account }}</RouterLink></li>
+            <li><a href="javascript:;" @click="clearUser">退出登录</a></li>
         </template>
         <template v-else>
             <li><RouterLink to="/login">请先登录</RouterLink></li>
-            <li><a href="javascript:;">免费注册</a></li>
+            <li><RouterLink to="/register" href="javascript:;">免费注册</RouterLink></li>
         </template>
         <li><a href="javascript:;">我的订单</a></li>
         <li><a href="javascript:;">会员中心</a></li>
@@ -23,12 +23,19 @@
 <script>
 import { computed } from 'vue'
 import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 export default {
   name: 'AppTopnav',
   setup () {
     const store = useStore()
     const profile = computed(() => store.state.user.profile)
-    return { profile }
+    const router = useRouter()
+    const clearUser = () => {
+      store.commit('user/setUser', {})
+      store.commit('cart/setCart', [])
+      router.push('/login')
+    }
+    return { profile, clearUser }
   }
 }
 </script>

@@ -61,10 +61,13 @@
       <a href="javascript:;" class="btn" @click="login">登录</a>
     </Form>
     <div class="action">
-      <img src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" alt="">
+      <a
+        href="https://graph.qq.com/oauth2.0/authorize?client_id=100556005&response_type=token&scope=all&redirect_uri=http%3A%2F%2Fwww.corho.com%3A8080%2F%23%2Flogin%2Fcallback">
+        <img src="https://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" alt="">
+      </a>
       <div class="url">
         <a href="javascript:;">忘记密码</a>
-        <a href="javascript:;">免费注册</a>
+        <router-link href="javascript:;" to="/register">免费注册</router-link>
       </div>
     </div>
   </div>
@@ -104,6 +107,12 @@ export default {
     // 切换表单元素，还原数据和清除校验效果
     const formCom = ref(null)
     watch(isMsgLogin, () => {
+      cleaInfo()
+      console.log(form)
+    })
+    // 需要在点击登录的时候对整体表单进行校验
+    // 清除数据以及表单
+    const cleaInfo = () => {
       // 还原数据
       form.isAgree = true
       form.account = null
@@ -112,8 +121,7 @@ export default {
       form.code = null
       // 补充校验效果清除，Form组件提供resetForm()
       formCom.value.resetForm()
-    })
-    // 需要在点击登录的时候对整体表单进行校验
+    }
     const store = useStore()
     const router = useRouter()
     // 拿路由信息的
@@ -134,8 +142,11 @@ export default {
           const { id, avatar, nickname, account, mobile, token } = data.result
           store.commit('user/setUser', { id, avatar, nickname, account, mobile, token })
           // 进行跳转
-          router.push(route.query.redirectUrl || '/')
-          message({ type: 'success', text: '登入成功' })
+          cleaInfo()
+          store.dispatch('cart/mergeCart').then(() => {
+            router.push(route.query.redirectUrl || '/')
+            message({ type: 'success', text: '登入成功' })
+          })
         } catch (e) {
           if (e.response.data) {
             message({ type: 'error', text: e.response.data.message })

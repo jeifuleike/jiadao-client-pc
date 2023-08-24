@@ -19,7 +19,7 @@ const changePageList = (page, maxPage, showNum) => {
       pageList.push(i)
     }
   } else if (page > (maxPage - Intermediate)) {
-    for (let i = showNum % 2 === 0 ? (maxPage - Intermediate - 2) : (maxPage - Intermediate - 1); i <= maxPage; i++) {
+    for (let i = maxPage - showNum + 1; i <= maxPage; i++) {
       pageList.push(i)
     }
   } else {
@@ -39,7 +39,7 @@ export default {
     },
     showNum: {
       type: Number,
-      default: 5
+      default: 3
     },
     maxPage: {
       type: Number,

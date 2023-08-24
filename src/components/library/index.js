@@ -2,6 +2,7 @@
 // vue3插件写法要素：导出一个对象，有install函数，默认传入了app应用实例，app基础之上进行扩展
 import defaultImg from '@/assets/images/200.png'
 import Message from './Message'
+import Confirm from './Confirm'
 
 // 批量导入一个文件夹内的文件
 // context(目录路径, 是否加载子目录, 加载文件的匹配正则)
@@ -22,6 +23,7 @@ export default {
 
     // 定义一个原型函数
     app.config.globalProperties.$message = Message
+    app.config.globalProperties.$confirm = Confirm
   }
 }
 
